@@ -1,0 +1,21 @@
+{
+  "name": "spiderweb",
+  "private": true,
+  "engines": {
+    "node": ">=10",
+    "yarn": "^1.17.3"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "lint": "wsrun -c lint",
+    "build": "wsrun -e -c build",
+    "test": "wsrun -e -c test"
+  },
+  "dependencies": {
+    "wsrun": "^5.2.4"
+  }
+}
