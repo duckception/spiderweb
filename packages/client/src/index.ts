@@ -1,3 +1,5 @@
-import { Server, PORT } from '@spiderweb/server'
+import { SpiderwebClient } from './client'
 
-new Server().start(PORT)
+export {
+  SpiderwebClient,
+}
