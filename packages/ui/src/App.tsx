@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import { Logs } from './components/Logs';
 import { ILog } from './models/log.model';
 import { Actions } from './components/Actions';
+import { ServerList } from './components/ServerList'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,11 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-// const ServerLogsData:IServer= {
-//   serverId: 1,
-//   timestamp: faker.time.recent(),
-//   data: faker.lorem.words(),
-// }
+
 
 const App = () => {
   const classes = useStyles();
@@ -66,36 +63,24 @@ const App = () => {
 
   return (
     <div className="App">
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered >
-          <Tab label="Logs" {...a11yProps(0)} />
-          <Tab label="Actions" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <Logs />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Actions />
-      </TabPanel>
-    </div>
-    
-    
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered >
+            <Tab label="Logs" {...a11yProps(0)} />
+            <Tab label="Actions" {...a11yProps(1)} />
+            <Tab label="Servers" {...a11yProps(2)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          <Logs />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Actions />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <ServerList />
+        </TabPanel>
+      </div>
     </div>
 
     
