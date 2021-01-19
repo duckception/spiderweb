@@ -1,6 +1,6 @@
-import Action, { IAction } from './action.model'
-import Log, { ILog } from './log.model'
-import Server, { IServer } from './server.model'
+import Action from './action.model'
+import Log from './log.model'
+import Server from './server.model'
 
 const models = [
   Action,
@@ -8,12 +8,6 @@ const models = [
   Server,
 ] as const
 
-type Models = typeof models
-
 export {
   models,
-  // Models,
-  // IAction,
-  // ILog,
-  // IServer,
 }
