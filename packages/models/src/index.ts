@@ -4,9 +4,9 @@ import { Server, IServer, serverModel } from './db/server.model'
 import { Operation } from './server/operation'
 
 const models = [
-  Action,
-  Log,
-  Server,
+  actionModel,
+  logModel,
+  serverModel,
 ] as const
 
 type Models = typeof models
