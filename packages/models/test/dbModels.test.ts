@@ -19,7 +19,7 @@ after(async () => {
   await mongoServer.stop()
 })
 
-describe('models', () => {
+describe('database models', () => {
   it('server', async () => {
     await createRandomServerModel()
     expect(await serverModel.countDocuments()).to.equal(1)
