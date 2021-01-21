@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "incremental": true,
+    "tsBuildInfoFile": "./cache/tsconfig.tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "dist",
+  },
+  "include": [
+    "src/**/*",
+    "src/**/*.sh"
+  ],
+  "references": [
+    {
+      "path": "../models"
+    }
+  ]
+}

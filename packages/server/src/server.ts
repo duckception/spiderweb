@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import express, { Express } from 'express'
 import { Server as SocketServer } from 'socket.io'
-import { models, Operation } from '@spiderweb/models'
+import { IServer, models, Operation, serverModel } from '@spiderweb/models'
 import { MONGODB_URI, mongooseConfig, PORT } from './config'
 import { watchCollections } from './utils/watchCollections'
 
@@ -38,10 +38,18 @@ export default class SpiderwebServer {
   async setupAPI(): Promise<void> {
     this.io.on('connection', (socket: SocketServer) => {
       let agentId: string
+      let server: IServer
 
-      socket.on('Agent Registration', (data) => {
-        agentId = data
+      socket.on('Agent Registration', async (data) => {
         this.activeAgents.add(data)
+        await serverModel.findOne({ agentName: data }, (err: any, doc: IServer): void => {
+          if (err) throw err
+          if (!doc) {
+            socket.close()
+          }
+          server = doc
+        })
+        agentId = data
         console.log(`[server]: New agent connected - ${agentId}`)
         this.io.emit('Agent', [...this.activeAgents])
       })
@@ -68,6 +76,13 @@ export default class SpiderwebServer {
               this.io.emit(model.modelName, data)
             })
           } else if (operation.action === 'create') {
+            if (agentId && server) {
+              operation.data = {
+                timestamp: Date.now(),
+                ...operation.data,
+                serverId: server._id,
+              }
+            }
             model.create(operation.data)
           } else if (operation.action === 'delete') {
             // * Due to unknown reason this is randomly not working
