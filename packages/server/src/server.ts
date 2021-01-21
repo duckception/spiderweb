@@ -71,7 +71,7 @@ export default class SpiderwebServer {
             model.create(operation.data)
           } else if (operation.action === 'delete') {
             // * Due to unknown reason this is randomly not working
-            // model.findOneAndDelete(operation.data)
+            // // model.findOneAndDelete(operation.data)
           } else if (operation.action === 'update') {
             // * Same issue as with "delete"
           } else if (operation.action === 'execute') {
