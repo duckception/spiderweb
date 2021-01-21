@@ -22,9 +22,9 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Build contracts and src
+      - name: Build packages
         run: yarn build
-      - name: Test contracts
+      - name: Test packages
         run: yarn test
 
   lint:
