@@ -1,10 +1,14 @@
 import { Server } from 'socket.io'
-import { Models } from '../models/index'
+import { Models, Operation } from '@spiderweb/models'
 
 export function watchCollections(io: Server, models: Models): void {
   for (const model of models) {
     model.watch().on('change', (change) => {
-      io.emit(model.modelName, change)
+      const operation: Operation = {
+        action: 'raw',
+        data: change,
+      }
+      io.emit(model.modelName, operation)
     })
   }
 }
