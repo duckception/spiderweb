@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose'
 import { IServer } from './server.model'
 
-export interface ILog extends Document {
+interface ILog extends Document {
   serverId: IServer['_id'],
   timestamp: Date,
   data: string,
@@ -13,4 +13,10 @@ const Log: Schema = new Schema({
   data: { type: String, required: true },
 })
 
-export default mongoose.model<ILog>('Log', Log)
+const logModel = mongoose.model<ILog>('Log', Log)
+
+export {
+  Log,
+  logModel,
+  ILog,
+}

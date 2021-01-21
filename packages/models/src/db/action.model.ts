@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose'
 import { IServer } from './server.model'
 
-export interface IAction extends Document {
+interface IAction extends Document {
   name: string,
   serverId: IServer['_id'],
   command: string,
@@ -13,4 +13,10 @@ const Action: Schema = new Schema({
   command: { type: String, required: true },
 })
 
-export default mongoose.model<IAction>('Action', Action)
+const actionModel = mongoose.model<IAction>('Action', Action)
+
+export {
+  Action,
+  actionModel,
+  IAction,
+}
