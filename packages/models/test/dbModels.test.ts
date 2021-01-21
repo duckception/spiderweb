@@ -31,7 +31,7 @@ describe('database models', () => {
     await logModel.create({
       serverId: server._id,
       timestamp: faker.time.recent(),
-      data: faker.lorem.words(),
+      data: faker.lorem.words(10),
     })
 
     expect(await logModel.countDocuments()).to.equal(1)
@@ -42,8 +42,8 @@ describe('database models', () => {
 
     await actionModel.create({
       serverId: server._id,
-      name: faker.name.findName(),
-      command: faker.lorem.words(),
+      name: faker.lorem.words(10),
+      command: faker.lorem.words(10),
     })
 
     expect(await actionModel.countDocuments()).to.equal(1)
