@@ -6,7 +6,10 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "mongoose": "^5.11.10"
+    "mongoose": "^5.11.10",
+    "@spiderweb/client": "^1.0.0",
+    "@spiderweb/models": "^1.0.0",
+    "@spiderweb/plugins": "^1.0.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",

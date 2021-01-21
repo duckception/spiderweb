@@ -8,6 +8,7 @@ export function watchCollections(io: Server, models: Models): void {
         action: 'raw',
         data: change,
       }
+      console.log(operation)
       io.emit(model.modelName, operation)
     })
   }

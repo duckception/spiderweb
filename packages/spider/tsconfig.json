@@ -8,5 +8,15 @@
   },
   "include": [
     "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../client"
+    },
+    {
+      "path": "../models"
+    }, {
+      "path": "../plugins"
+    }
   ]
 }
