@@ -8,7 +8,7 @@ const Api: Schema = new Schema({
   apiKey: { type: String, required: true, unique: true },
 })
 
-const apiModel = mongoose.model<IApi>('Action', Api)
+const apiModel = mongoose.model<IApi>('Api', Api)
 
 export {
   Api,
