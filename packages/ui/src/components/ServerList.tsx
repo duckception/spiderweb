@@ -70,7 +70,7 @@ export const ServerList:React.FC<Props> = ({ spiderwebService }) => {
       <Table className={classes.table} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>Server</TableCell>
+            <TableCell>Agent name</TableCell>
             <TableCell align='center' scope='row' component='th'><Container>Status</Container></TableCell>
           </TableRow>
         </TableHead>

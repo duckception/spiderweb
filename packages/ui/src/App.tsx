@@ -71,7 +71,7 @@ const App: React.FC<Props> = ({ spiderwebService }) => {
           <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
             <Tab label="Logs" {...a11yProps(0)} />
             <Tab label="Actions" {...a11yProps(1)} />
-            <Tab label="Servers" {...a11yProps(2)} />
+            <Tab label="Tail Connected Servers" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>

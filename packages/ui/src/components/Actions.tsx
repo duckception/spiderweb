@@ -58,7 +58,7 @@ export const Actions: React.FC<Props> = ({ spiderwebService }) => {
         <TableHead>
           <TableRow>
             <TableCell >Server</TableCell>
-            <TableCell align="right">Command</TableCell>
+            <TableCell align="right">Action name</TableCell>
             <TableCell align="right">Execute  </TableCell>
           </TableRow>
         </TableHead>
@@ -66,10 +66,10 @@ export const Actions: React.FC<Props> = ({ spiderwebService }) => {
           {actions.map((action: any, index: number) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row" >
-                {action.name}
+                {action.serverId?.name ?? 'UNKNOWN SERVER'}
               </TableCell>
               <TableCell component="th" scope="row" align="right">
-                {action.command}
+                {action.name}
               </TableCell>
               <TableCell align="right">
                 <Button
