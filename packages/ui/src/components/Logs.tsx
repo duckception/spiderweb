@@ -8,26 +8,32 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import { LogsItem } from './LogsItem'
-
-// const useRowStyles = makeStyles({
-//   root: {
-//     '& > *': {
-//       borderBottom: 'unset',
-//     },
-//   },
-// })
-
-//   const ServerLogsData:ILog= {
-//     serverId: 2,
-//     timestamp: new Date,
-//     data: faker.lorem.words(),
-//   }
+import { SpiderwebService } from '../services/SpiderwebService'
+import { useState, useEffect } from 'react'
 
 interface Props {
-  logs: any,
+  spiderwebService: SpiderwebService,
 }
-export const Logs:React.FC<Props> = ({ logs }) => {
-  console.log(logs)
+export const Logs:React.FC<Props> = ({ spiderwebService }) => {
+  const [logs, setLogs] = useState<string[]>([])
+
+  useEffect(() => {
+    spiderwebService.client.listen('Log', (data) => {
+      console.log(data)
+      if (data.action === 'read') {
+        console.log(data.data)
+        setLogs(data.data)
+      } else if (data.action === 'create') {
+        console.log('CREATE')
+        setLogs((prevActions: string[]) => [...prevActions, data.data])
+      }
+    })
+    spiderwebService.client.send('Log', {
+      action: 'read',
+      data: {},
+    })
+  }, [])
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

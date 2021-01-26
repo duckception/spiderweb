@@ -6,6 +6,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Container, TableContainer } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
+import { useState, useEffect } from 'react'
+import { Server, SpiderwebService } from '../services/SpiderwebService'
 
 const useStyles = makeStyles({
   table: {
@@ -35,29 +37,34 @@ const useStyles = makeStyles({
     maxWidth: '10rem',
   },
 })
+
 interface Props {
-  serverList: any,
+  spiderwebService: SpiderwebService,
 }
-export const ServerList:React.FC<Props> = ({ serverList }) => {
+
+export const ServerList:React.FC<Props> = ({ spiderwebService }) => {
   const classes = useStyles()
   const checkStatusClass = (status: number) => {
     if (status === 0) {
-      return classes.connecting
+      return classes.connected
     } else if (status === 1) {
       return classes.canceled
     }
-    return classes.connected
   }
-  const checkStatus = (status: number) => {
-    if (status === 0) {
-      return 'connecting'
-    } else if (status === 1) {
-      return 'canceled'
-    }
-    return 'connected'
-  }
-  console.log(serverList)
-  console.log('SERVERRRRRLLLLLLLL')
+
+  const [serverList, setServerList] = useState<Server[]>([])
+
+  useEffect(() => {
+    spiderwebService.client.listen('Agent', (data) => {
+      setServerList((prevServerList: Server[]) => spiderwebService.createAgentsList(prevServerList, data))
+    })
+
+    spiderwebService.client.send('Agent', {
+      action: 'read',
+      data: {},
+    })
+  }, [])
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='simple table'>
@@ -68,14 +75,14 @@ export const ServerList:React.FC<Props> = ({ serverList }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {serverList.map((row: any) => (
-            <TableRow key={row.name}>
+          {serverList.map((server: Server) => (
+            <TableRow key={server.name ?? 0}>
               <TableCell >
-                {row}
+                {server.name}
               </TableCell>
               <TableCell align='center' scope='row' component='th'>
-                <Container maxWidth='xs' className={checkStatusClass(row.status)}>
-                  {checkStatus(row.status)}
+                <Container maxWidth='xs' className={checkStatusClass(server.status)}>
+                  {server.status === 0 ? 'Connected' : 'Disconnected'}
                 </Container>
               </TableCell>
             </TableRow>

@@ -31,6 +31,9 @@ export class SpiderwebClient {
 }
 
 const client = new SpiderwebClient('Spidi')
+setTimeout(() => {
+  client.disconnect()
+}, 3000)
 // const id = mongoose.mongo.ObjectId.createFromTime(Date.now())
 // client.send('Action', {
 //   action: 'create',

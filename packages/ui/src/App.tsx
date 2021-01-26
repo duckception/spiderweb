@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box'
 import { Logs } from './components/Logs'
 import { Actions } from './components/Actions'
 import { ServerList } from './components/ServerList'
-import { SpiderwebClient } from '@spiderweb/client'
+import { SpiderwebService } from './services/SpiderwebService'
 interface TabPanelProps {
   children?: React.ReactNode,
   index: any,
@@ -52,65 +52,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const App = () => {
+interface Props {
+  spiderwebService: SpiderwebService,
+}
+
+const App: React.FC<Props> = ({ spiderwebService }) => {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
-  const [actions, setActions] = React.useState<any>([])
-  const [serverList, setServerList] = React.useState<any>([])
-  const [logs, setLogs] = React.useState<any>([])
-  // const [executeReady, setExecuteReady] = React.useState(false)
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue)
   }
 
-  let client: SpiderwebClient
-  // let handleExecute: (command: string) => void
-  React.useEffect(() => {
-    client = new SpiderwebClient('AlfaAgent')
-    client.listen('Action', (data) => {
-      console.log(data)
-      if (data.action === 'read') {
-        console.log(data.data)
-        setActions(data.data)
-      } else if (data.action === 'create') {
-        console.log('CREATE')
-        setActions((prevActions: string[]) => [...prevActions, data.data])
-      }
-    })
-    client.send('Action', {
-      action: 'read',
-      data: {},
-    })
-
-    client.listen('Agent', (data) => {
-      setServerList(data)
-    })
-
-    client.listen('Log', (data) => {
-      console.log(data)
-      if (data.action === 'read') {
-        console.log(data.data)
-        setLogs(data.data)
-      } else if (data.action === 'create') {
-        console.log('CREATE')
-        setLogs((prevActions: string[]) => [...prevActions, data.data])
-      }
-    })
-    client.send('Log', {
-      action: 'read',
-      data: {},
-    })
-
-    // setExecuteReady(true)
-  }, [])
-
-  const handleExecute = (command: string) => {
-    client.send('Action', {
-      action: 'execute',
-      data: command,
-    })
-  }
   return (
     <div className="App">
       <div className={classes.root}>
@@ -122,13 +75,13 @@ const App = () => {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Logs logs={logs}/>
+          <Logs spiderwebService={spiderwebService} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {client && <Actions actions={actions} handleExecute={handleExecute} />}
+          <Actions spiderwebService={spiderwebService} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ServerList serverList={serverList}/>
+          <ServerList spiderwebService={spiderwebService}/>
         </TabPanel>
       </div>
     </div>
