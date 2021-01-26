@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import { IServer } from '../models/server.model'
+import { IServer } from '@spiderweb/models'
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
 

@@ -27,6 +27,8 @@
   "references": [
     {
       "path": "../client"
+    }, {
+      "path": "../models"
     }
   ]
 }
