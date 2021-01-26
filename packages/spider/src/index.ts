@@ -9,8 +9,8 @@ interface SpiderOptions {
 export class Spider {
   client: SpiderwebClient
 
-  constructor(agentName: string, options?: SpiderOptions) {
-    this.client = new SpiderwebClient(agentName)
+  constructor(apiKey: string, agentName: string, options?: SpiderOptions) {
+    this.client = new SpiderwebClient({ apiKey, agentName })
     void this.prepareServerConnection()
   }
 
