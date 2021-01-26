@@ -4,15 +4,21 @@ import { Operation, Channel } from '@spiderweb/models'
 import mongoose from 'mongoose'
 import faker from 'faker'
 
+interface SpiderwebClientConfig {
+  apiKey: string,
+  agentName?: string,
+}
+
 export class SpiderwebClient {
   socket: Socket
 
-  constructor(agentName?: string) {
+  constructor(config: SpiderwebClientConfig) {
     // this.socket = io(`${SERVER_URL}:${PORT}`)
     this.socket = io('http://localhost:4444')
     console.log(`[client]: Connected to ${SERVER_URL}:${PORT}`)
-    if (agentName) {
-      this.socket.emit('Agent Registration', agentName)
+
+    if (config.apiKey) {
+      this.socket.emit('Validation', { apiKey: config.apiKey, agentName: config.agentName })
     }
   }
 
@@ -29,17 +35,3 @@ export class SpiderwebClient {
     this.socket.disconnect()
   }
 }
-
-const client = new SpiderwebClient('Spidi')
-setTimeout(() => {
-  client.disconnect()
-}, 3000)
-// const id = mongoose.mongo.ObjectId.createFromTime(Date.now())
-// client.send('Action', {
-//   action: 'create',
-//   data: {
-//     name: faker.random.words(3),
-//     command: faker.random.words(3),
-//     serverId: id,
-//   },
-// })
