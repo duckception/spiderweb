@@ -9,7 +9,7 @@ export class SpiderwebService {
   client: SpiderwebClient
 
   constructor() {
-    this.client = new SpiderwebClient('AlfaAgent')
+    this.client = new SpiderwebClient({ apiKey: 'YOUR_API_KEY_GOES_HERE' })
   }
 
   createAgentsList(prevAgents: Server[], newAgentsRaw: string[]): Server[] {
