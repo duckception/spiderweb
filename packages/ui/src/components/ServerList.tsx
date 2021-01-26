@@ -4,33 +4,8 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import faker from 'faker'
 import { Container, TableContainer } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
-
-interface Server {
-  serverId: number,
-  name: string,
-  status: number,
-}
-
-const serversData: Server[] = [
-  {
-    serverId: 1,
-    name: faker.lorem.word(),
-    status: 0,
-  },
-  {
-    serverId: 2,
-    name: faker.lorem.word(),
-    status: 1,
-  },
-  {
-    serverId: 3,
-    name: faker.lorem.word(),
-    status: 3,
-  },
-]
 
 const useStyles = makeStyles({
   table: {
@@ -60,26 +35,29 @@ const useStyles = makeStyles({
     maxWidth: '10rem',
   },
 })
-
-export const ServerList:React.FC = () => {
+interface Props {
+  serverList: any,
+}
+export const ServerList:React.FC<Props> = ({ serverList }) => {
   const classes = useStyles()
   const checkStatusClass = (status: number) => {
     if (status === 0) {
-      return classes.connected
+      return classes.connecting
     } else if (status === 1) {
       return classes.canceled
     }
-    return classes.connecting
+    return classes.connected
   }
   const checkStatus = (status: number) => {
     if (status === 0) {
-      return 'connected'
+      return 'connecting'
     } else if (status === 1) {
       return 'canceled'
     }
-    return 'connecting'
+    return 'connected'
   }
-
+  console.log(serverList)
+  console.log('SERVERRRRRLLLLLLLL')
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='simple table'>
@@ -90,10 +68,10 @@ export const ServerList:React.FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {serversData.map((row) => (
+          {serverList.map((row: any) => (
             <TableRow key={row.name}>
               <TableCell >
-                {row.name}
+                {row}
               </TableCell>
               <TableCell align='center' scope='row' component='th'>
                 <Container maxWidth='xs' className={checkStatusClass(row.status)}>

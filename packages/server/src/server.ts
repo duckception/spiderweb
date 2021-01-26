@@ -4,6 +4,7 @@ import { Server as SocketServer } from 'socket.io'
 import { IServer, models, Operation, serverModel } from '@spiderweb/models'
 import { MONGODB_URI, mongooseConfig, PORT } from './config'
 import { watchCollections } from './utils/watchCollections'
+import cors from 'cors'
 
 export default class SpiderwebServer {
   app: Express
@@ -12,11 +13,18 @@ export default class SpiderwebServer {
 
   constructor() {
     this.app = express()
+    this.app.use(cors({
+      origin: 'http://localhost:3000',
+    }))
     this.app
     const server = this.app.listen(PORT, () => {
       console.log(`[server]: Server is running at http://localhost:${PORT}`)
     })
-    this.io = new SocketServer(server)
+    this.io = new SocketServer(server, {
+      cors: {
+        origin: 'http://localhost:3000',
+      },
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.setupAPI()
@@ -83,7 +91,15 @@ export default class SpiderwebServer {
                 serverId: server._id,
               }
             }
+
             model.create(operation.data)
+
+            const data: Operation = {
+              action: 'create',
+              data: operation.data,
+            }
+
+            this.io.emit(model.modelName, data)
           } else if (operation.action === 'delete') {
             // * Due to unknown reason this is randomly not working
             // // model.findOneAndDelete(operation.data)

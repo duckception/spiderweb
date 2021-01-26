@@ -19,7 +19,7 @@ import React from 'react'
 interface Props{
   serverId: IServer['_id'],
   timestamp: Date,
-  data: string,
+  data: any,
 }
 const useRowStyles = makeStyles({
   root: {
@@ -30,11 +30,9 @@ const useRowStyles = makeStyles({
 })
 
 export const LogsItem:React.FC<Props> = ({ serverId, timestamp, data }) => {
-// export const Logs = ({ILog}) => {
-  // const { row } = props;
   const [open, setOpen] = React.useState(false)
   const classes = useRowStyles()
-  const logsData = data.split(' ')
+  // const logsData = data.split(' ')
   return (
     <>
       <TableRow className={classes.root}>
@@ -46,7 +44,8 @@ export const LogsItem:React.FC<Props> = ({ serverId, timestamp, data }) => {
         <TableCell component="th" scope="row">
           {serverId} my Server
         </TableCell>
-        <TableCell align="center">{timestamp.toLocaleDateString('en-US')}</TableCell>
+        {/* <TableCell align="center">{timestamp.toLocaleDateString('en-US')}</TableCell> */}
+        <TableCell align="center">{timestamp}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -65,10 +64,10 @@ export const LogsItem:React.FC<Props> = ({ serverId, timestamp, data }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {logsData.map((log) => (
+                  {Object.keys(data).map((key: any) => (
                     <TableRow>
-                      <TableCell key={log} component="th" scope="row">
-                        {log}
+                      <TableCell key={key} component="th" scope="row">
+                        {key} - {data[key]}
                       </TableCell>
                     </TableRow>
                   ))}
