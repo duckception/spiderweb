@@ -10,14 +10,13 @@ import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import { IServer } from '@spiderweb/models'
 // eslint-disable-next-line no-use-before-define
 import React from 'react'
 
 // export const Logs:React.FC<ILog> = ({serverId, timestamp, data}) => {
 
 interface Props{
-  serverId: IServer['_id'],
+  serverName: string,
   timestamp: Date,
   data: any,
 }
@@ -29,10 +28,9 @@ const useRowStyles = makeStyles({
   },
 })
 
-export const LogsItem:React.FC<Props> = ({ serverId, timestamp, data }) => {
+export const LogsItem:React.FC<Props> = ({ serverName, timestamp, data }) => {
   const [open, setOpen] = React.useState(false)
   const classes = useRowStyles()
-  // const logsData = data.split(' ')
   return (
     <>
       <TableRow className={classes.root}>
@@ -42,9 +40,8 @@ export const LogsItem:React.FC<Props> = ({ serverId, timestamp, data }) => {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {serverId} my Server
+          {serverName}
         </TableCell>
-        {/* <TableCell align="center">{timestamp.toLocaleDateString('en-US')}</TableCell> */}
         <TableCell align="center">{timestamp}</TableCell>
       </TableRow>
       <TableRow>
@@ -52,22 +49,18 @@ export const LogsItem:React.FC<Props> = ({ serverId, timestamp, data }) => {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
-                        Logs
+                        Plugins data
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    {/* <TableCell>Date</TableCell>
-                            <TableCell>Customer</TableCell>
-                            <TableCell align="right">Amount</TableCell>
-                            <TableCell align="right">Total price ($)</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {Object.keys(data).map((key: any) => (
                     <TableRow>
                       <TableCell key={key} component="th" scope="row">
-                        {key} - {data[key]}
+                        <b>{key}</b> - {JSON.stringify(data[key])}
                       </TableCell>
                     </TableRow>
                   ))}

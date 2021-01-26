@@ -13,17 +13,20 @@ interface Props {
   spiderwebService: SpiderwebService,
 }
 export const Logs:React.FC<Props> = ({ spiderwebService }) => {
-  const [logs, setLogs] = useState<string[]>([])
+  const [logs, setLogs] = useState<any[]>([])
 
   useEffect(() => {
     spiderwebService.client.listen('Log', (data) => {
       console.log(data)
       if (data.action === 'read') {
         console.log(data.data)
-        setLogs(data.data)
+        setLogs(data.data.map((el: any) => { return { ...el, serverId: 0, serverName: el.serverId.name } }))
       } else if (data.action === 'create') {
         console.log('CREATE')
-        setLogs((prevActions: string[]) => [...prevActions, data.data])
+        setLogs((prevActions: string[]) => [
+          ...prevActions,
+          data.data.map((el: any) => { return { ...el, serverId: 0, serverName: el.serverId.name } }),
+        ])
       }
     })
     spiderwebService.client.send('Log', {
@@ -45,7 +48,7 @@ export const Logs:React.FC<Props> = ({ spiderwebService }) => {
         </TableHead>
         <TableBody>
           {logs.map((row: any, index: any) => (
-            <LogsItem key={index} serverId={row.serverId} timestamp={row.timestamp} data={row.data} />
+            <LogsItem key={index} serverName={row.serverName} timestamp={row.timestamp} data={row.data} />
           ))}
         </TableBody>
       </Table>
