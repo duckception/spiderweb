@@ -68,6 +68,12 @@ export default class SpiderwebServer {
         this.io.emit('Agent', [...this.activeAgents])
       })
 
+      socket.on('Agent', (data) => {
+        if (data.action === 'read') {
+          this.io.emit('Agent', [...this.activeAgents])
+        }
+      })
+
       for (let i = 0; i < models.length; i++) {
         // * Type "any" is used to bamboozle TS intellisense
         const model = models[i] as any
