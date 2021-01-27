@@ -2,7 +2,7 @@ import { config } from 'dotenv'
 import { ConnectOptions } from 'mongoose'
 
 config({
-  path: '../../.env',
+  path: '../../../.env',
 })
 
 const mongooseConfig: ConnectOptions = {

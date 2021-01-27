@@ -9,7 +9,7 @@ interface IAction extends Document {
 
 const Action: Schema = new Schema({
   name: { type: String, required: true, unique: true },
-  serverId: { type: Schema.Types.ObjectId, required: true },
+  serverId: { type: Schema.Types.ObjectId, required: true, ref: 'Server' },
   command: { type: String, required: true },
 })
 

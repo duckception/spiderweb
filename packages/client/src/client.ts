@@ -1,15 +1,24 @@
 import { SERVER_URL, PORT } from './config'
 import { io, Socket } from 'socket.io-client'
 import { Operation, Channel } from '@spiderweb/models'
+import mongoose from 'mongoose'
+import faker from 'faker'
+
+interface SpiderwebClientConfig {
+  apiKey: string,
+  agentName?: string,
+}
 
 export class SpiderwebClient {
   socket: Socket
 
-  constructor(agentName?: string) {
-    this.socket = io(`${SERVER_URL}:${PORT}`)
+  constructor(config: SpiderwebClientConfig) {
+    // this.socket = io(`${SERVER_URL}:${PORT}`)
+    this.socket = io('http://localhost:4444')
     console.log(`[client]: Connected to ${SERVER_URL}:${PORT}`)
-    if (agentName) {
-      this.socket.emit('Agent Registration', agentName)
+
+    if (config.apiKey) {
+      this.socket.emit('Validation', { apiKey: config.apiKey, agentName: config.agentName })
     }
   }
 
@@ -20,5 +29,9 @@ export class SpiderwebClient {
 
   send(channel: Channel, data: Operation): void {
     this.socket.emit(channel, data)
+  }
+
+  disconnect(): void {
+    this.socket.disconnect()
   }
 }

@@ -1,4 +1,5 @@
 import { Action, IAction, actionModel } from './db/action.model'
+import { Api, IApi, apiModel } from './db/api.model'
 import { Log, ILog, logModel } from './db/log.model'
 import { Server, IServer, serverModel } from './db/server.model'
 import { Operation } from './server/operation.interface'
@@ -18,6 +19,9 @@ export {
   Action,
   IAction,
   actionModel,
+  Api,
+  IApi,
+  apiModel,
   Log,
   ILog,
   logModel,

@@ -8,7 +8,7 @@ interface ILog extends Document {
 }
 
 const Log: Schema = new Schema({
-  serverId: { type: Schema.Types.ObjectId, required: true },
+  serverId: { type: Schema.Types.ObjectId, required: true, ref: 'Server' },
   timestamp: { type: Date, required: true },
   data: { type: Object, required: true },
 })
